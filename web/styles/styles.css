@@ -1,0 +1,236 @@
+/* 
+    Created on : 04.05.2018, 10:37:09
+    Author     : dmitry
+*/
+html,body{
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    min-height: 100%;
+}
+body{
+    background: #ccc;
+}
+h1{
+    margin: 0;
+    padding: 0;
+    /*border: 1px solid white;*/
+    text-align: center;
+    color: #eee;
+}
+h1>a{
+    text-decoration: none;
+    color: #eee;
+}
+input[type = "text"], input[type = "password"]{
+    border: 1px solid #ccc;
+    height: 15px;
+    color: #ccc;
+    background: #555;
+}
+
+input[type = "number"]{
+    border: 1px solid #555;
+    color: #555;
+    height: 25px;
+    background: #ccc;
+}
+
+input[type = "submit"]{
+    background  : #555;
+    border: 0;
+    /*height: 15px;*/
+    padding: 3px 5px;
+    color: #ccc;
+    border-radius: 3px;
+    transition: .3s;
+}
+input[type = "submit"]:hover{
+    background: #666;
+}
+.header{
+    margin: 0;
+    background: #666;
+    min-height: 10%;
+}
+
+.content{
+    background: rgba(0, 0, 0, 0.2);
+    width: 100%;
+    height: 90%;
+}
+
+.block_category{
+    position: relative;
+    width: 20%;
+    /*background: rgba(0, 255, 0, 0.5);*/
+    float: left;
+    height: 100%;
+}
+
+
+.users{
+    position: relative;
+    /*background: rgba(255, 255, 0, 0.5);*/
+    width: 80%;
+    float: left;
+    height: 50px;
+}
+
+.products{
+    position: relative;
+    /*background: rgba(0, 255, 255, 0.5);*/
+    width: 80%;
+    float: left;
+    height: calc(100% - 50px);
+    overflow: scroll;
+}
+
+.login, .signin{
+    position: relative;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+.login li{
+    float: left;
+    height: 24px;
+    margin: 0;
+    padding: 13px 5px;
+}
+
+.signin{
+    width: 350px;
+    height: 200px;
+    background: #333;
+    margin: 50px auto;
+    border-radius: 10px;
+    padding-top: 15px;
+}
+
+.signin li{
+    position: relative;
+    color: #ccc;
+    padding: 5px 15px;
+    left: 5px;
+}
+
+.signin li:first-child{
+    /*top: 15px;*/
+}
+
+.signin li span{
+    display: block;
+    float: left;
+    width: 100px;
+    /*border: 1px solid red;*/
+}
+
+.registration{
+    position: relative;
+    /*margin: 15px 0;*/
+    text-decoration: none;
+    background  : #555;
+    border: 0;
+    padding: 3px 5px;
+    color: #ccc;
+    border-radius: 3px;
+    transition: .3s;
+    font-size: 12px;
+    top: 13px;
+    cursor: default;
+}
+.registration:hover{
+    background: #666;
+}
+
+.block_product{
+    position: relative;
+    background: #ccc;
+    width: 270px;
+    float: left;
+    margin: 15px;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid #333;
+}
+
+.block_product h3{
+    margin: 0;
+    padding: 5px 0;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.block_product span{
+    margin: 5px;
+}
+
+.block_product img{
+    display: block;
+    border-radius: 50%;
+    width: 200px;
+    height: 200px;
+    margin: auto;
+}
+
+.product_description{
+    top: 500px;
+    position: absolute;
+    transition: .3s;
+    width: 100%;
+    height: calc(100% - 30px);
+    border-radius: 0 0 10px 10px;
+    background: rgba(0,0,0,0.9);
+    color: #ccc;
+    overflow: scroll;
+    padding: 0 10px;
+}
+
+.description_button{
+    display: block;
+    text-align: center;
+    width: 150px;
+    margin: 5px auto;
+    padding: 10px 0;
+    background: #555;
+    color: #ccc;
+    cursor: pointer;
+    border-radius: 10px;
+    transition: 0.3s;
+}
+
+
+
+.block_product div:hover .product_description{
+    display: block;
+    top: 30px;
+}
+
+.description_button:hover{
+    background: #666;
+}
+
+.block_product form{
+    margin: 3px 5px;
+}
+
+.block_product form input{
+    margin: 0 5px;
+}
+
+.button{
+    position: relative;
+    text-decoration: none;
+    background  : #555;
+    border: 0;
+    padding: 3px 5px;
+    color: #ccc;
+    border-radius: 3px;
+    transition: .3s;
+    font-size: 12px;
+    cursor: default;
+}
+.button:hover{
+    background: #666;
+}
