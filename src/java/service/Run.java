@@ -1,10 +1,10 @@
 package service;
 
-import connectionPool.ConnectionPool;
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.sql.Date;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoField;
+import java.time.temporal.TemporalField;
 
 /**
  *
@@ -13,22 +13,9 @@ import java.util.logging.Logger;
 public class Run {
     public static void main(String[] args) {
         
-        Connection connection = null;
-        
-        try{
-            connection = ConnectionPool.getInstance().getConnection();
-            System.out.println("Connection yes");
-        } catch (SQLException ex) {
-            Logger.getLogger(Run.class.getName()).log(Level.SEVERE, null, ex);
-        }finally{
-            if (connection != null){
-                try {
-                    connection.close();
-                } catch (SQLException ex) {
-                    Logger.getLogger(Run.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        }
+        Date date = new Date(System.currentTimeMillis());
+        System.out.println(date);
+        System.out.println(date.getTime());
         
     }
 }

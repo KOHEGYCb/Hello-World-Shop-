@@ -25,5 +25,7 @@ public class ColumnNames {
     public static final String RESERVED_PRODUCT_ID = "id_product";
     public static final String RESERVED_PRODUCT_KOL = "kol_product";
     
+    public static final String SUM_KOL_PRODUCTS = "sum(kol_product)";
+    
     private ColumnNames(){}
 }

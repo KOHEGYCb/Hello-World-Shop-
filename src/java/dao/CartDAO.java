@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 /**
  *
@@ -24,23 +25,64 @@ public class CartDAO {
         return INSTANCE;
     }
 
-    public Reserv getReservByUser(User user) throws SQLException{
-        Reserv reserv = null;
+    public ArrayList<Reserv> getReservByUserId(int  id) throws SQLException{
+        ArrayList<Reserv> reserves = new ArrayList<>();
         Connection connection = ConnectionPool.getInstance().getConnection();
         PreparedStatement statement = connection.prepareStatement(SQLRequests.GET_RESERV_BY_USER_ID);
-        statement.setString(1, String.valueOf(user.getId()));
+        statement.setInt(1, id);
+        ResultSet result = statement.executeQuery();
+        while (result.next()) {
+            
+            Reserv reserv = new Reserv();
+            reserv.setId(result.getInt(ColumnNames.RESERVED_ID));
+            reserv.setIdProduct(result.getInt(ColumnNames.RESERVED_PRODUCT_ID));
+            reserv.setIdUser(result.getInt(ColumnNames.RESERVED_USER_ID));
+            reserv.setKol(result.getInt(ColumnNames.RESERVED_PRODUCT_KOL));
+            reserves.add(reserv);
+        }
+        closeJDBC(connection, statement, result);
+        return reserves;
+    }
+
+    public void deleteReservById(int id) throws SQLException{
+        Connection connection = ConnectionPool.getInstance().getConnection();
+        PreparedStatement statement = connection.prepareStatement(SQLRequests.DELETE_RESERV_BY_ID);
+        statement.setInt(1, id);
+        statement.executeUpdate();
+        closeJDBC(connection, statement);
+    }
+    
+    public int getKolProductsCartByUserId(int id) throws SQLException{
+        int kol = 0;
+        Connection connection = ConnectionPool.getInstance().getConnection();
+        PreparedStatement statement = connection.prepareStatement(SQLRequests.GET_SUM_KOL_PRODUCTS);
+        statement.setInt(1, id);
         ResultSet result = statement.executeQuery();
         if (result.next()) {
+            kol = result.getInt(ColumnNames.SUM_KOL_PRODUCTS);
+        }
+        closeJDBC(connection, statement, result);
+        return kol;
+    }
+    
+    public Reserv getReservById(int id) throws SQLException {
+        Reserv reserv = null;
+        Connection connection = ConnectionPool.getInstance().getConnection();
+        PreparedStatement statement = connection.prepareStatement(SQLRequests.GET_RESERV_BY_ID);
+        statement.setInt(1, id);
+        ResultSet result = statement.executeQuery();
+        if (result.next()) {
+            
             reserv = new Reserv();
             reserv.setId(result.getInt(ColumnNames.RESERVED_ID));
             reserv.setIdProduct(result.getInt(ColumnNames.RESERVED_PRODUCT_ID));
             reserv.setIdUser(result.getInt(ColumnNames.RESERVED_USER_ID));
-            reserv.setKol(result.getInt(result.getInt(ColumnNames.RESERVED_PRODUCT_KOL)));
+            reserv.setKol(result.getInt(ColumnNames.RESERVED_PRODUCT_KOL));
         }
         closeJDBC(connection, statement, result);
         return reserv;
     }
-
+    
     public void createReserv(Reserv reserv) throws SQLException{
         Connection connection = ConnectionPool.getInstance().getConnection();
         PreparedStatement statement = connection.prepareStatement(SQLRequests.ADD_RESERV);
@@ -80,4 +122,6 @@ public class CartDAO {
             ConnectionPool.getInstance().releaseConnection(connection);
         }
     }
+
+
 }

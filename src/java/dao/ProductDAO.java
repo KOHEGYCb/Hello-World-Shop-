@@ -1,7 +1,6 @@
 package dao;
 
 import beans.Product;
-import beans.User;
 import connectionPool.ConnectionPool;
 import enums.ColumnNames;
 import enums.SQLRequests;
@@ -113,11 +112,11 @@ public class ProductDAO {
 
     }
 
-    public void updateProductKol(Product product, int newKol) throws SQLException {
+    public void updateProductKol(int id, int newKol) throws SQLException {
         Connection connection = ConnectionPool.getInstance().getConnection();
         PreparedStatement statement = connection.prepareStatement(SQLRequests.CHANGE_PRODUCT_KOL_BY_PRODUCT_ID);
         statement.setInt(1, newKol);
-        statement.setInt(2, product.getId());
+        statement.setInt(2, id);
         statement.executeUpdate();
         closeJDBC(connection, statement);
     }

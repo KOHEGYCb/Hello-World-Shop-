@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package servlets;
 
 import beans.Product;
@@ -29,29 +24,35 @@ public class AddToCartServlet extends ManagerServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        if (Integer.parseInt(req.getParameter("kol")) > 0) {
-            Reserv reserv = new Reserv();
-            HttpSession session = req.getSession();
-            User user = (User) session.getAttribute("user");
-            Product product = null;
-            try {
-                product = ProductDAO.getINSTANCE().getProductById(Integer.parseInt(req.getParameter("product_id")));
-            } catch (SQLException ex) {
-                Logger.getLogger(AddToCartServlet.class.getName()).log(Level.SEVERE, null, ex);
-            }
+        if(req.getSession().getAttribute("user") != null ){
+            if (Integer.parseInt(req.getParameter("kol")) > 0) {
+                Reserv reserv = new Reserv();
+                HttpSession session = req.getSession();
+                User user = (User) session.getAttribute("user");
+                Product product = null;
+                try {
+                    product = ProductDAO.getINSTANCE().getProductById(Integer.parseInt(req.getParameter("product_id")));
+                } catch (SQLException ex) {
+                    Logger.getLogger(AddToCartServlet.class.getName()).log(Level.SEVERE, null, ex);
+                }
 
-            reserv.setKol(Integer.parseInt(req.getParameter("kol")));
-            reserv.setIdProduct(Integer.parseInt(req.getParameter("product_id")));
-            reserv.setIdUser(user.getId());
+                reserv.setKol(Integer.parseInt(req.getParameter("kol")));
+                reserv.setIdProduct(Integer.parseInt(req.getParameter("product_id")));
+                reserv.setIdUser(user.getId());
 
-            int newKol = product.getKol() - reserv.getKol();
-            System.out.println("old kol|reserved|newKol = " + product.getKol() + "|" + reserv.getKol() + "|" + newKol);
-            try {
-                CartDAO.getINSTANCE().createReserv(reserv);
-                ProductDAO.getINSTANCE().updateProductKol(product, newKol);
-            } catch (SQLException ex) {
-                Logger.getLogger(AddToCartServlet.class.getName()).log(Level.SEVERE, null, ex);
+                int newKol = product.getKol() - reserv.getKol();
+                System.out.println("old kol|reserved|newKol = " + product.getKol() + "|" + reserv.getKol() + "|" + newKol);
+                try {
+                    CartDAO.getINSTANCE().createReserv(reserv);
+                    ProductDAO.getINSTANCE().updateProductKol(product.getId(), newKol);
+                } catch (SQLException ex) {
+                    Logger.getLogger(AddToCartServlet.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }else{
+                req.setAttribute("error", "kol = 0");
             }
+        }else{
+            req.setAttribute("error", "You need to login");
         }
         super.forward("/", req, resp);
 
